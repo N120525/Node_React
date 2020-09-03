@@ -7,7 +7,9 @@ export interface Keys {
   secret: string,
   cluster: string,
   encrypted: boolean,
-  googleClientId:string
+  googleClientId:string,
+  API_KEY:string,
+  CHAT_ID:string
 }
 
 export const keys = (): Keys => {

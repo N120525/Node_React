@@ -4,5 +4,7 @@ export const devKeys = {
   secret: '680e5a1d85b653d89259',
   cluster: 'ap2',
   encrypted: true,
-  googleClientId :''
+  googleClientId :'',
+  API_KEY:'',
+  CHAT_ID:''
 };

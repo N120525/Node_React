@@ -4,5 +4,7 @@ export const prodKeys = {
   secret: '',
   cluster: '',
   encrypted: false,
-  googleClientId:''
+  googleClientId:'',
+  API_KEY:'',
+  CHAT_ID:''
 };

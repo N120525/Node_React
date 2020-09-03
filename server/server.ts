@@ -4,10 +4,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 import { keys } from "./config/keys";
 const app: Application = express();
-const { appId, key, secret, cluster, encrypted, googleClientId } = keys();
+const { appId, key, secret, cluster, encrypted, googleClientId, API_KEY,CHAT_ID } = keys();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+const https = require('https');
 
 const pusher = new Pusher({
   appId: appId,
@@ -33,7 +34,24 @@ app.post("/streamUrl", (req: Request, res: Response) => {
   let streamData = req.body;
   let streamUrl = streamData.streamingURl;
   let keyWords = streamData.keywords;
-  res.send(streamUrl);
+
+  https.get(`https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${CHAT_ID}&part=snippet%2CauthorDetails&key=${API_KEY}`, (resp) => {
+  let data = '';
+
+  // A chunk of data has been recieved.
+  resp.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received. Print out the result.
+  resp.on('end', () => {
+    res.send(JSON.parse(data).explanation);
+  });
+
+}).on("error", (err) => {
+  res.send("Error: " + err.message);
+});
+  
 });
 
 /**
